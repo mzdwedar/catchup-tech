@@ -278,6 +278,15 @@ Design decisions and their reasoning live in `SPEC.md` and the per-module specs;
 `CAPABILITY-MAP.md` is the index. `superseded/` keeps earlier designs and explains what
 changed and why — this started life as an unattended email newsletter.
 
-## License
+## Credits and licensing
 
-Not yet chosen — see the note in the repository before reusing.
+The general engineering skills in `.claude/skills/` and the checklists in
+`.claude/references/` are **not this project's work**. They are vendored copies of
+[addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) v0.6.8, MIT licensed,
+Copyright (c) 2025 Addy Osmani — full notice in
+[`LICENSE-THIRD-PARTY.md`](LICENSE-THIRD-PARTY.md). The only skill authored here is
+`.claude/skills/ai-news-tracker/`, which holds this project's configuration.
+
+This project's own code and documentation have **no license yet**, which means default
+copyright applies and nobody can legally reuse them. If you intend that to change, add a
+LICENSE file.

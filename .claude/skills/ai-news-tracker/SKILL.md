@@ -21,10 +21,23 @@ scope, sources, or taste is encoded in Python.
 | `04-scoring.md` | The notability rubric and gate thresholds | `/scrape` scoring |
 | `05-digest-design.md` | Artifact structure, section order, voice | `/scrape` composition |
 
+`05-digest-design.md`'s **structure is fixed** — TLDR of conclusions, then per item the
+bottleneck, why it matters, and the trend. `/setup` chooses topics, sources, and window;
+it does not renegotiate what an entry must answer.
+
 `02-sources.md` is the one file with a **machine-read format**: any markdown table row
 containing a URL becomes a source. Column order does not matter — the parser finds the
 URL, takes the first non-URL cell as the name, and any cell reading `primary`, `press`,
 `community`, or `research` as the tier. Prose around the table is ignored.
+
+Two rules are easy to trip over:
+
+- **Rows inside a fenced code block are examples, not sources.** This exists because
+  `02-sources.md` documents the arXiv row that setup removed, and without the fence check
+  the file explaining how to re-enable a source had already re-enabled it.
+- **`research`-tier rows are APIs, not feeds.** They are fetched by `catchup-arxiv` and
+  skipped by the feed parser, which would return a silent zero on JSON. Deleting a
+  research row is how a research service gets turned off.
 
 ## How the work is divided
 

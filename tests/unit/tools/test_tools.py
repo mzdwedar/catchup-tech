@@ -138,6 +138,35 @@ def test_arxiv_fetch_queries_both_services(feed_bytes: Callable[[str], bytes]) -
     assert {i.source for i in items} == {"arXiv", "Hugging Face Papers"}
 
 
+def test_arxiv_fetch_skips_the_service_the_config_omits(
+    feed_bytes: Callable[[str], bytes],
+) -> None:
+    """Dropping raw arXiv must actually stop the request, not just filter after it."""
+    called: list[str] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        called.append(request.url.host)
+        if "arxiv" in request.url.host:
+            return httpx.Response(200, content=feed_bytes("arxiv_query.xml"))
+        return httpx.Response(200, content=feed_bytes("hf_papers.json"))
+
+    wide = DateRange(start=date(2000, 1, 1), end=date(2100, 1, 1))
+    with httpx.Client(transport=httpx.MockTransport(handler)) as http:
+        items = fetch_arxiv(wide, http=http, kinds=frozenset({"papers"}))
+
+    assert called == ["huggingface.co"], "arXiv should not have been queried at all"
+    assert {i.source for i in items} == {"Hugging Face Papers"}
+
+
+def test_arxiv_fetch_with_no_kinds_makes_no_request() -> None:
+    def explode(request: httpx.Request) -> httpx.Response:
+        raise AssertionError("no research source is configured")
+
+    wide = DateRange(start=date(2000, 1, 1), end=date(2100, 1, 1))
+    with httpx.Client(transport=httpx.MockTransport(explode)) as http:
+        assert fetch_arxiv(wide, http=http, kinds=frozenset()) == ()
+
+
 def test_arxiv_fetch_raises_so_the_cli_can_report_it() -> None:
     def handler(request: httpx.Request) -> httpx.Response:
         return httpx.Response(503)

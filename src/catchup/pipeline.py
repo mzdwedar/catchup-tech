@@ -26,7 +26,7 @@ from catchup.collect import GateError, UrlChecker, default_checker, gate
 from catchup.seen import DEFAULT_LEDGER, SeenLedger
 from catchup.sources.arxiv import fetch_arxiv
 from catchup.sources.cli import DEFAULT_DAYS, today_utc
-from catchup.sources.config import load_sources
+from catchup.sources.config import load_sources, research_kinds, split_sources
 from catchup.sources.feeds import fetch_feeds
 from catchup.sources.hn import fetch_hn
 from catchup.sources.models import DateRange, Item, Origin, SourceFailure
@@ -115,16 +115,26 @@ def fetch_all(window: DateRange) -> tuple[tuple[Item, ...], tuple[SourceFailure,
     items: list[Item] = []
     failures: list[SourceFailure] = []
 
-    feed_items, feed_failures = fetch_feeds(load_sources(), window)
+    feeds, research = split_sources(load_sources())
+    feed_items, feed_failures = fetch_feeds(feeds, window)
     items.extend(feed_items)
     failures.extend(feed_failures)
 
-    for name, fetcher in (("Hacker News", fetch_hn), ("Research", fetch_arxiv)):
+    try:
+        items.extend(fetch_hn(window))
+    except Exception as exc:
+        logger.warning("source skipped", extra={"source": "Hacker News"})
+        failures.append(SourceFailure(source="Hacker News", reason=type(exc).__name__))
+
+    # Only the research services the config lists. An empty set means the research row
+    # was deleted, which is how "drop raw arXiv" is expressed without a code change.
+    kinds = research_kinds(research)
+    if kinds:
         try:
-            items.extend(fetcher(window))
+            items.extend(fetch_arxiv(window, kinds=kinds))
         except Exception as exc:
-            logger.warning("source skipped", extra={"source": name})
-            failures.append(SourceFailure(source=name, reason=type(exc).__name__))
+            logger.warning("source skipped", extra={"source": "Research"})
+            failures.append(SourceFailure(source="Research", reason=type(exc).__name__))
     return tuple(items), tuple(failures)
 
 

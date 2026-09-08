@@ -103,39 +103,52 @@ def parse_hf_papers(payload: object, window: DateRange) -> tuple[Item, ...]:
     return tuple(items)
 
 
+ALL_KINDS = frozenset({"arxiv", "papers"})
+
+
 def fetch_arxiv(
     window: DateRange,
     categories: tuple[str, ...] = DEFAULT_CATEGORIES,
     http: httpx.Client | None = None,
+    kinds: frozenset[str] = ALL_KINDS,
 ) -> tuple[Item, ...]:
     """Fetch recent arXiv submissions and Hugging Face daily papers.
 
     arXiv has no date filter in its query language, so this asks for the most recent
     submissions and lets the window filter do the work — which is why `MAX_RESULTS` is
     generous rather than tuned.
+
+    `kinds` selects which services to query, so a config that lists only Hugging Face
+    daily papers does not silently pull a hundred unranked arXiv preprints alongside it.
     """
+    if not kinds:
+        return ()
     owned = http is None
     http = http or client()
     collected: list[Item] = []
     try:
-        query = " OR ".join(f"cat:{c}" for c in categories)
-        response = http.get(
-            ARXIV_ENDPOINT,
-            params={
-                "search_query": query,
-                "sortBy": "submittedDate",
-                "sortOrder": "descending",
-                "max_results": str(MAX_RESULTS),
-            },
-        )
-        response.raise_for_status()
-        collected.extend(parse_arxiv(response.content, window))
+        if "arxiv" in kinds:
+            query = " OR ".join(f"cat:{c}" for c in categories)
+            response = http.get(
+                ARXIV_ENDPOINT,
+                params={
+                    "search_query": query,
+                    "sortBy": "submittedDate",
+                    "sortOrder": "descending",
+                    "max_results": str(MAX_RESULTS),
+                },
+            )
+            response.raise_for_status()
+            collected.extend(parse_arxiv(response.content, window))
 
-        hf = http.get(HF_ENDPOINT, params={"limit": "100"})
-        hf.raise_for_status()
-        collected.extend(parse_hf_papers(hf.json(), window))
+        if "papers" in kinds:
+            hf = http.get(HF_ENDPOINT, params={"limit": "100"})
+            hf.raise_for_status()
+            collected.extend(parse_hf_papers(hf.json(), window))
     finally:
         if owned:
             http.close()
-    logger.info("research fetched", extra={"items": len(collected)})
+    logger.info(
+        "research fetched", extra={"items": len(collected), "kinds": sorted(kinds)}
+    )
     return tuple(collected)

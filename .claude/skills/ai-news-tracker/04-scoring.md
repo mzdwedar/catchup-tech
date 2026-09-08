@@ -10,27 +10,44 @@ Score each item 0–10. Sum the dimensions, then apply the exclusions.
 | Dimension | Max | What earns it |
 |---|---|---|
 | **Topic match** | 4 | 4 for a top-three topic in `01-interests.md`; 2 for anything lower in the list; 0 for adjacent-but-not-listed |
-| **Notability** | 3 | 3 for a capability, release, or result; 2 for a substantive technical writeup; 1 for informed analysis; 0 for commentary on commentary |
+| **Notability** | 3 | 3 for a **cleared limit** — something now possible, cheaper, or faster that was not; 2 for a release or result with no limit named; 1 for informed analysis; 0 for commentary on commentary |
 | **Source tier** | 2 | 2 for `primary` (the org announcing its own work); 1 for `press` or `research`; 1 for `community` with technical depth |
 | **Corroboration** | 1 | 1 if the same story reached us from more than one source, or from HN above 100 points |
 
-**Always-surface override:** anything from a lab or person in `01-interests.md`'s
-always-surface list floors at 6, so a genuine announcement cannot fall below the cutoff on
-topic wording alone.
+**Notability rewards the bottleneck.** Top marks go to an item you can write
+`05-digest-design.md`'s bottleneck line for — one that names a real prior limit. That is
+deliberate: *breakthroughs* is the first-ranked topic, and an item that merely shipped is
+not the same as an item that unblocked something. If you cannot name what it clears, it
+scores 2, not 3.
+
+**Always-surface override:** anything from a lab or company in `01-interests.md`'s
+always-surface list floors at 6, so a genuine announcement cannot fall below the bar on
+topic wording alone. Note this floors them **exactly at** the bar — they get in, but they
+do not outrank anything.
 
 **Exclusions remove, they do not subtract.** An item matching the exclude list is dropped
 regardless of score.
 
-## Cutoff
+## Cutoff — a bar, not a quota
 
-Take the highest-scoring items down to the target in `03-period.md` (12), never below the
-minimum (6) and never above the maximum (18).
+**Publish everything scoring 6 or above. There is no item cap** (`03-period.md`).
 
-Ties break toward: primary source, then earlier publication date, then shorter path to the
-underlying artifact (the paper over the writeup about it).
+A big week gets a big digest; a quiet week gets a short one. That is the intended
+behaviour, and it is why the bar has to hold: with no quota forcing the twelfth item to
+beat the thirteenth, nothing stops the threshold drifting downward except attention to it.
 
-Items scoring 5 or above that miss the cutoff go into **Also noticed** as one-liners —
-they are the honest signal that the period had more in it than the digest shows.
+| Score | Outcome |
+|---|---|
+| 6–10 | Published |
+| 5 | **Also noticed** — a one-liner. The honest signal that the period held more |
+| 0–4 | Dropped, with the reason recorded |
+
+Ordering within a section breaks toward: primary source, then earlier publication date,
+then shorter path to the underlying artifact (the paper over the writeup about it).
+
+**If a digest feels padded, raise this number — do not reintroduce a cap.** A cap would
+hide the drift rather than fix it, and would start discarding items that genuinely cleared
+the bar.
 
 ## Recording
 
@@ -43,3 +60,10 @@ diagnosable: you can see what lost and why, rather than guessing at the model's 
 After a run that reads wrong, change this file — not the gates in `catchup.collect`.
 Weakening a gate to make a run pass is explicitly forbidden; changing what counts as
 notable is exactly what this file is for.
+
+Two dials, in the order to reach for them:
+
+1. **The bar (6).** Digest too long or padded → raise it. Too thin while good items sat in
+   *Also noticed* → lower it.
+2. **The topic order in `01-interests.md`.** Right length, wrong items → the weighting is
+   off, not the threshold.

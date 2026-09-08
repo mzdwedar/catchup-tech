@@ -14,8 +14,9 @@ from pathlib import Path
 
 import pytest
 
+from catchup import pipeline
 from catchup.pipeline import item_from_json, item_to_json, main, read_items
-from catchup.sources.models import Item, Origin
+from catchup.sources.models import DateRange, Item, Origin
 
 WINDOW = ["--since", "2026-09-01", "--until", "2026-09-08"]
 
@@ -202,3 +203,111 @@ def test_the_ledger_filter_can_be_bypassed(
 
     assert code == 0
     assert len(json.loads(capsys.readouterr().out)["items"]) == 7
+
+
+# --- fetch_all honours the source config ----------------------------------------
+
+
+def test_fetch_all_skips_research_when_the_config_lists_none(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """The wiring test.
+
+    `research_kinds` returning nothing is worthless if `fetch_all` calls the research
+    fetcher anyway. That exact break shipped once — an edit to this function silently
+    failed to apply while every unit test still passed, and raw arXiv kept arriving.
+    """
+    from catchup.sources.config import FeedSource
+
+    called: list[str] = []
+    monkeypatch.setattr(
+        pipeline,
+        "load_sources",
+        lambda: (FeedSource("Blog", "https://example.com/feed", "press"),),
+    )
+    monkeypatch.setattr(pipeline, "fetch_feeds", lambda *_a, **_k: ((), ()))
+    monkeypatch.setattr(
+        pipeline, "fetch_hn", lambda *_a, **_k: called.append("hn") or ()
+    )
+    monkeypatch.setattr(
+        pipeline, "fetch_arxiv", lambda *_a, **_k: called.append("research") or ()
+    )
+
+    pipeline.fetch_all(DateRange(date(2026, 9, 1), date(2026, 9, 8)))
+
+    assert called == ["hn"], "no research row configured, so none should be fetched"
+
+
+def test_fetch_all_passes_the_configured_kinds_through(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from catchup.sources.config import FeedSource
+
+    seen: list[frozenset[str]] = []
+    sources = (
+        FeedSource("Blog", "https://example.com/feed", "press"),
+        FeedSource("HF papers", "https://huggingface.co/api/daily_papers", "research"),
+    )
+    monkeypatch.setattr(pipeline, "load_sources", lambda: sources)
+    monkeypatch.setattr(pipeline, "fetch_feeds", lambda *_a, **_k: ((), ()))
+    monkeypatch.setattr(pipeline, "fetch_hn", lambda *_a, **_k: ())
+    monkeypatch.setattr(
+        pipeline, "fetch_arxiv", lambda _w, **kw: seen.append(kw["kinds"]) or ()
+    )
+
+    pipeline.fetch_all(DateRange(date(2026, 9, 1), date(2026, 9, 8)))
+
+    assert seen == [frozenset({"papers"})], "raw arXiv must not be requested"
+
+
+def test_fetch_all_keeps_research_rows_out_of_the_feed_fetch(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A JSON endpoint handed to the feed parser returns a silent zero, not an error."""
+    from catchup.sources.config import FeedSource
+
+    handed: list[tuple[str, ...]] = []
+    sources = (
+        FeedSource("Blog", "https://example.com/feed", "press"),
+        FeedSource("HF papers", "https://huggingface.co/api/daily_papers", "research"),
+    )
+    monkeypatch.setattr(pipeline, "load_sources", lambda: sources)
+    monkeypatch.setattr(
+        pipeline,
+        "fetch_feeds",
+        lambda got, *_a, **_k: (handed.append(tuple(s.name for s in got)), ((), ()))[1],
+    )
+    monkeypatch.setattr(pipeline, "fetch_hn", lambda *_a, **_k: ())
+    monkeypatch.setattr(pipeline, "fetch_arxiv", lambda *_a, **_k: ())
+
+    pipeline.fetch_all(DateRange(date(2026, 9, 1), date(2026, 9, 8)))
+
+    assert handed == [("Blog",)]
+
+
+def test_a_failing_source_does_not_end_the_run(monkeypatch: pytest.MonkeyPatch) -> None:
+    from catchup.sources.config import FeedSource
+
+    sources = (
+        FeedSource("HF papers", "https://huggingface.co/api/daily_papers", "research"),
+    )
+    monkeypatch.setattr(pipeline, "load_sources", lambda: sources)
+    monkeypatch.setattr(pipeline, "fetch_feeds", lambda *_a, **_k: ((), ()))
+    monkeypatch.setattr(pipeline, "fetch_hn", lambda *_a, **_k: _items(2))
+
+    def boom(*_a: object, **_k: object) -> tuple[Item, ...]:
+        raise TimeoutError("papers API down")
+
+    monkeypatch.setattr(pipeline, "fetch_arxiv", boom)
+
+    items, failures = pipeline.fetch_all(DateRange(date(2026, 9, 1), date(2026, 9, 8)))
+
+    assert len(items) == 2, "Hacker News items survive a research outage"
+    assert [(f.source, f.reason) for f in failures] == [("Research", "TimeoutError")]
+
+
+def _items(n: int) -> tuple[Item, ...]:
+    return tuple(
+        Item(f"Story {chr(97 + i)}", f"https://example.com/{i}", "X", date(2026, 9, 3))
+        for i in range(n)
+    )

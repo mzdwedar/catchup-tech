@@ -1,10 +1,10 @@
 [project]
 name = "catchup"
 version = "0.1.0"
-description = "Biweekly tech news digest, generated with Claude and published to a newsletter platform"
+description = "On-demand AI news catch-up, published as a Claude Artifact"
 requires-python = ">=3.12"
 dependencies = [
-    "anthropic",
+    "feedparser>=6.0.14",
     "httpx",
 ]
 
@@ -16,6 +16,11 @@ dev = [
     "ruff",
     "ty",
 ]
+
+[project.scripts]
+catchup-feeds = "catchup.tools.feed_search:main"
+catchup-hn = "catchup.tools.hn_search:main"
+catchup-arxiv = "catchup.tools.arxiv_search:main"
 
 [build-system]
 requires = ["hatchling"]

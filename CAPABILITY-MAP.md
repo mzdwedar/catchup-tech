@@ -1,68 +1,75 @@
-# Capability Map: Biweekly Tech Digest
+# Capability Map: AI News Catch-up
 
-**Revision 2**, approved 2026-09-01. Supersedes revision 1 (static CSV roster,
-per-recipient sending) — see `superseded/README.md`.
+**Revision 3**, approved 2026-09-08. Supersedes revision 2 (unattended email newsletter)
+— see `superseded/README.md`.
 
 This file is the index of what exists. Specs are selected by module id, never by guessing
 filenames.
 
 ## Initiative
 
-A service that gathers notable tech news from the trailing two weeks and emails a digest
-to a self-serve subscriber list. Runs every two weeks, unattended.
+A local, interactive system for catching up on AI news. You declare what to follow with
+`/setup`, and `/scrape` collects everything published in a window, validates it, and
+publishes a readable digest as a Claude Artifact.
+
+Two commands, run when you want them. Nothing is sent to anyone.
 
 ## Division of responsibility
 
-**The newsletter platform owns:** the subscriber list, the hosted signup page and
-embeddable form, double opt-in confirmation, unsubscribe (link plus `List-Unsubscribe`
-headers), bounce and complaint suppression, and the fan-out to subscribers.
+**Deterministic tools own:** fetching from feeds and APIs, normalizing to one item shape,
+parsing publication dates, filtering to the window, deduplicating, and checking that
+links resolve. All free, offline-testable, and unaffected by model variance.
 
-**We own:** generating the digest, composing the email body, publishing one broadcast,
-scheduling, and the safety gates that decide whether a run sends at all.
+**Claude owns:** judgement. Scoring items against your interests, writing the summary and
+the *why it matters* line, grouping, and composing the artifact. Plus a WebSearch pass to
+catch stories no configured feed carries.
+
+The split is deliberate: anything a tool can decide is never left to the model.
 
 ## Modules
 
 | Module id | Responsibility | Depends on | Spec |
 |---|---|---|---|
-| `digest` | Claude + `web_search` over the trailing 14 days → validated structured digest. Owns the prompt file and the validation gates | — | `SPEC-digest.md` |
-| `render` | Compose the digest into email body content **once**, not per recipient | `digest` | `SPEC-render.md` (pending revision) |
-| `broadcast` | Publish one broadcast to the platform's list; preflight checks; read subscriber count for the run record | `render` | not yet written |
-| `runner` | Entry point + GitHub Actions workflow: schedule gate, orchestration, idempotency, run record, alerting | all | `SPEC-runner.md` (pending revision) |
+| `sources` | Fetch from feeds and APIs; normalize to `Item`; parse dates. One thin CLI per source under `.agents/skills/` | — | `SPEC-collect.md` |
+| `collect` | Merge source output, apply gates G1–G5, maintain the cross-run seen ledger | `sources` | `SPEC-collect.md` |
+| `scrape` | The `/scrape` command: window resolution, parallel fetch, WebSearch pass, scoring, run record | `collect` | `SPEC-scrape.md` |
+| `artifact` | Compose and publish the digest artifact; maintain the local index | `scrape` | `SPEC-artifact.md` |
+| `setup` | The `/setup` command: interview → the five config files | — | `SPEC-scrape.md` (§ Configuration) |
 
-**Build order:** `digest` → `render` → `broadcast` → `runner`
+**Build order:** `sources` → `collect` → `setup` → `scrape` → `artifact`
 
-Dependency arrows point one way; there are no cycles. Every module is independently
-verifiable: `digest` prints to stdout with no email involved, `broadcast` publishes to a
-test list of one.
+`setup` depends on nothing and could be built first; it sits after `collect` only because
+the config it writes is easier to get right once the fetchers exist to consume it.
 
 ## Locked decisions
 
 | Decision | Choice | Rationale |
 |---|---|---|
-| News source | LLM + `web_search` server tool | User decision. Buys coverage of stories no curated feed list would know about |
-| Model | Deferred | One config value. Defaults to `claude-opus-5` |
-| Subscriber list | Hosted newsletter platform, self-serve signup **and** unsubscribe | No database, no web service, no signup surface to host |
-| Platform | Buttondown-style newsletter product, **not** Resend | Resend owns the list but not the signup page — using it would reintroduce the web service this choice exists to avoid. **Unverified; confirmed by the T1 spike** |
-| Hosting | GitHub Actions cron, biweekly | 26 runs/year does not justify infrastructure |
-| Stack | Python, uv + pytest | Matches the toolchain the repo's installed skills assume |
+| Interface | Claude Code slash commands, config as markdown | Modelled on `MadsLorentzen/ai-job-search`. Every knob is a file you can hand-edit; scope is config, not code |
+| Fetching | Source CLI tools **and** a WebSearch pass | Tools give reproducibility and cost nothing; WebSearch covers what no feed carries (Anthropic publishes no RSS) |
+| Output | A new Claude Artifact per run, dated | Browsable history in the gallery; a local `INDEX.md` links them |
+| Scope | AI-focused, user-configurable | Ships AI defaults; widening to broader tech is a config edit, not a rewrite |
+| Cadence | On demand | You read the output before it goes anywhere, so nothing needs to be safe unattended |
+| Stack | Python 3.12, uv + pytest | Unchanged from revision 2; the toolchain and CI already exist |
+| Source auth | None | Every default source is verified reachable with no API key |
 
-## Consequences of the revision-2 architecture
+## Consequences of the revision-3 architecture
 
 | Change | Effect |
 |---|---|
-| Platform owns fan-out | `render` renders **once**; `Recipient` leaves its signature. Golden tests get simpler and stricter |
-| Platform owns bounces | The async-bounce gap flagged in revision 1 is closed — it is the platform's job now |
-| Platform owns the list | Real addresses never enter git. The repo-visibility privacy question dissolves |
-| One broadcast, not N sends | No rate limiting, retry classification, circuit breaker, or per-recipient resume |
-| **Cost:** no per-recipient visibility | We know "published to N subscribers", not who bounced. That lives in the platform dashboard |
-| **Cost:** vendor holds the list | Mitigated by a periodic CSV export |
+| A human reads every digest before it is published | The elaborate send-safety machinery disappears: no send guards, no double-send idempotency, no alerting |
+| Deterministic tools replace one big API call | The default suite tests real fetch/parse/gate logic offline, instead of replaying recorded model output |
+| Config lives in markdown, not Python | Changing what you follow needs no code change and no test update |
+| Per-run artifacts | History is browsable, and a bad run is discarded by simply not linking it |
+| **Cost:** feeds must be maintained | A feed URL can rot. A dead feed is logged and skipped, never fatal; WebSearch is the safety net |
+| **Cost:** coverage is bounded by the source list | Mitigated by the WebSearch pass, which is not bounded by it |
 
 ## Risks carried into planning
 
 | Risk | Mitigation | Lives in |
 |---|---|---|
-| `page_age` is approximate, so out-of-window items slip in | Model returns explicit `published_date`; a gate drops items outside the window | `digest` |
-| Search results vary run to run — tests non-deterministic and billed | Recorded API responses replayed in CI; live calls only in an opt-in manual run | `digest` |
-| Thin or off-topic results still look confident | Gates on count, window, and URL liveness; the run **aborts and alerts rather than sends** | `digest`, `runner` |
-| Structured outputs may not compose with web search citations | Spike before writing the module; documented two-pass fallback | `digest` |
-| Platform capabilities assumed, not verified | Spike before writing `render` or `broadcast` | T1 |
+| Feeds report dates in inconsistent formats | Tolerant parser with a fixture per source; an unparseable date drops the item rather than defaulting to today | `sources` |
+| A source goes away (Anthropic already has no feed) | Sources are config; failures are logged and skipped, never fatal | `sources` |
+| Bot protection looks like a dead link | G3 drops only on 404/410 or connection failure — never on 403/429 | `collect` |
+| Thin or off-topic results still look confident | G1/G5 abort the run rather than publish a thin digest | `collect` |
+| Scoring drifts run to run | The rubric is a reviewable file; `data/runs/` keeps raw and scored items so a bad run is diagnosable | `scrape` |

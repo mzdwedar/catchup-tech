@@ -1,0 +1,173 @@
+[
+  {
+    "paper": {
+      "id": "2609.03005",
+      "authors": [
+        {
+          "_id": "6aa02fa5d0174964227beaf1",
+          "name": "Xiao Shi Huang",
+          "hidden": false
+        },
+        {
+          "_id": "6aa02fa5d0174964227beaf2",
+          "name": "Chen-Yuan Lin",
+          "hidden": false
+        },
+        {
+          "_id": "6aa02fa5d0174964227beaf3",
+          "name": "Bruce Kuwahara",
+          "hidden": false
+        },
+        {
+          "_id": "6aa02fa5d0174964227beaf4",
+          "name": "Kin Kwan Leung",
+          "hidden": false
+        },
+        {
+          "_id": "6aa02fa5d0174964227beaf5",
+          "name": "Jesse C. Cresswell",
+          "hidden": false
+        }
+      ],
+      "publishedAt": "2026-09-02T00:00:00.000Z",
+      "submittedOnDailyAt": "2026-09-08T00:00:00.000Z",
+      "title": "Unifying Conformal Language Tasks with In-Context Ensembles",
+      "submittedOnDailyBy": {
+        "_id": "65adf6fbae773a8112f4b9ad",
+        "avatarUrl": "/avatars/38d2eb81bf1f9b8c4a1903d21c48f365.svg",
+        "isPro": false,
+        "fullname": "Jesse Cresswell",
+        "user": "JesseCresswell",
+        "type": "user",
+        "name": "JesseCresswell"
+      },
+      "summary": "Many NLP tasks, such as summarization and extractive question answering, reduce to retrieving relevant content from documents under two constraints: coverage, retaining enough pertinent information to achieve some goal, and conciseness, removing as much irrelevant information as possible. Conformal prediction methods have been used to guarantee coverage, and must be optimized for conciseness through design of a score function. State-of-the-art scoring functions use hand-engineered LLM prompts asking the model to rate the importance of content, but manual prompt engineering is labor-intensive and task-specific. We introduce the Conformal Relevance framework which uses in-context learning example curation and ensembling to create a score function which maintains coverage while improving conciseness with minimal manual input. We demonstrate this framework's application on seven NLP tasks, and also theoretically study the impact of diversity for ensembled conformal scores, giving a complementarity condition that characterizes when ensembling improves worst-case sentence scores, and a saturation bound on ensemble improvement.",
+      "upvotes": 2,
+      "discussionId": "6aa02fa5d0174964227beaf6",
+      "githubRepo": "https://github.com/layer6ai-labs/conformal-relevance",
+      "githubRepoAddedBy": "user",
+      "ai_summary": "The Conformal Relevance framework automates score function design for conformal prediction via in-context learning and ensembling to improve conciseness while preserving coverage across NLP retrieval tasks.",
+      "ai_keywords": [
+        "conformal prediction",
+        "in-context learning",
+        "ensembling",
+        "score function",
+        "coverage",
+        "conciseness",
+        "complementarity condition",
+        "saturation bound"
+      ],
+      "ai_summary_model": "thinkingmachines/Inkling-Small",
+      "organization": {
+        "_id": "6435e64e2d0ed796668fac8d",
+        "name": "Layer6",
+        "fullname": "Layer 6 AI",
+        "avatar": "https://cdn-avatars.huggingface.co/v1/production/uploads/6435e521a4bd75c62cc0a64c/4S8zHoJeYjBq0L0IDW0nu.png"
+      }
+    },
+    "publishedAt": "2026-09-01T20:00:00.000Z",
+    "title": "Unifying Conformal Language Tasks with In-Context Ensembles",
+    "summary": "Many NLP tasks, such as summarization and extractive question answering, reduce to retrieving relevant content from documents under two constraints: coverage, retaining enough pertinent information to achieve some goal, and conciseness, removing as much irrelevant information as possible. Conformal prediction methods have been used to guarantee coverage, and must be optimized for conciseness through design of a score function. State-of-the-art scoring functions use hand-engineered LLM prompts asking the model to rate the importance of content, but manual prompt engineering is labor-intensive and task-specific. We introduce the Conformal Relevance framework which uses in-context learning example curation and ensembling to create a score function which maintains coverage while improving conciseness with minimal manual input. We demonstrate this framework's application on seven NLP tasks, and also theoretically study the impact of diversity for ensembled conformal scores, giving a complementarity condition that characterizes when ensembling improves worst-case sentence scores, and a saturation bound on ensemble improvement.",
+    "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.03005.png",
+    "numComments": 1,
+    "submittedBy": {
+      "_id": "65adf6fbae773a8112f4b9ad",
+      "avatarUrl": "/avatars/38d2eb81bf1f9b8c4a1903d21c48f365.svg",
+      "fullname": "Jesse Cresswell",
+      "name": "JesseCresswell",
+      "type": "user",
+      "isPro": false,
+      "isHf": false,
+      "isHfAdmin": false,
+      "isMod": false,
+      "followerCount": 1,
+      "isUserFollowing": false
+    },
+    "organization": {
+      "_id": "6435e64e2d0ed796668fac8d",
+      "name": "Layer6",
+      "fullname": "Layer 6 AI",
+      "avatar": "https://cdn-avatars.huggingface.co/v1/production/uploads/6435e521a4bd75c62cc0a64c/4S8zHoJeYjBq0L0IDW0nu.png"
+    },
+    "isAuthorParticipating": false
+  },
+  {
+    "paper": {
+      "id": "2609.03003",
+      "authors": [
+        {
+          "_id": "6aa02f7bd0174964227beaeb",
+          "name": "Christopher Stith",
+          "hidden": false
+        },
+        {
+          "_id": "6aa02f7bd0174964227beaec",
+          "name": "Hossein Rahmani",
+          "hidden": false
+        },
+        {
+          "_id": "6aa02f7bd0174964227beaed",
+          "name": "Jesse C. Cresswell",
+          "hidden": false
+        }
+      ],
+      "publishedAt": "2026-09-02T00:00:00.000Z",
+      "submittedOnDailyAt": "2026-09-08T00:00:00.000Z",
+      "title": "Causal Foundation Models",
+      "submittedOnDailyBy": {
+        "_id": "65adf6fbae773a8112f4b9ad",
+        "avatarUrl": "/avatars/38d2eb81bf1f9b8c4a1903d21c48f365.svg",
+        "isPro": false,
+        "fullname": "Jesse Cresswell",
+        "user": "JesseCresswell",
+        "type": "user",
+        "name": "JesseCresswell"
+      },
+      "summary": "Causal inference is the practice of estimating the effect of a treatment or intervention from data. It traditionally requires a bespoke pipeline for every new problem: first proposing a causal mechanism, selecting a compatible estimator, and finally training it. Meanwhile, across diverse settings and modalities, much of machine learning has shifted to the paradigm of foundation models: networks pretrained once at scale and applied to new tasks without fine-tuning. Causal foundation models (CFMs) bring this paradigm to causal inference. CFMs are pretrained neural networks that estimate causal quantities, such as the average treatment effect, on entirely new datasets using in-context learning without requiring model updates. This work provides a practical introduction to this emerging area. We summarize the necessary background in causal inference and machine learning before discussing CFMs. Throughout, we include example code and Jupyter notebooks.",
+      "upvotes": 1,
+      "discussionId": "6aa02f7cd0174964227beaee",
+      "githubRepo": "https://github.com/layer6ai-labs/cfms",
+      "githubRepoAddedBy": "user",
+      "ai_summary": "Causal foundation models apply pretrained neural networks to estimate causal effects on new datasets via in-context learning without fine-tuning.",
+      "ai_keywords": [
+        "causal inference",
+        "causal foundation models",
+        "average treatment effect",
+        "in-context learning",
+        "pretrained neural networks"
+      ],
+      "ai_summary_model": "thinkingmachines/Inkling-Small",
+      "organization": {
+        "_id": "6435e64e2d0ed796668fac8d",
+        "name": "Layer6",
+        "fullname": "Layer 6 AI",
+        "avatar": "https://cdn-avatars.huggingface.co/v1/production/uploads/6435e521a4bd75c62cc0a64c/4S8zHoJeYjBq0L0IDW0nu.png"
+      }
+    },
+    "publishedAt": "2026-09-01T20:00:00.000Z",
+    "title": "Causal Foundation Models",
+    "summary": "Causal inference is the practice of estimating the effect of a treatment or intervention from data. It traditionally requires a bespoke pipeline for every new problem: first proposing a causal mechanism, selecting a compatible estimator, and finally training it. Meanwhile, across diverse settings and modalities, much of machine learning has shifted to the paradigm of foundation models: networks pretrained once at scale and applied to new tasks without fine-tuning. Causal foundation models (CFMs) bring this paradigm to causal inference. CFMs are pretrained neural networks that estimate causal quantities, such as the average treatment effect, on entirely new datasets using in-context learning without requiring model updates. This work provides a practical introduction to this emerging area. We summarize the necessary background in causal inference and machine learning before discussing CFMs. Throughout, we include example code and Jupyter notebooks.",
+    "thumbnail": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.03003.png",
+    "numComments": 1,
+    "submittedBy": {
+      "_id": "65adf6fbae773a8112f4b9ad",
+      "avatarUrl": "/avatars/38d2eb81bf1f9b8c4a1903d21c48f365.svg",
+      "fullname": "Jesse Cresswell",
+      "name": "JesseCresswell",
+      "type": "user",
+      "isPro": false,
+      "isHf": false,
+      "isHfAdmin": false,
+      "isMod": false,
+      "followerCount": 1,
+      "isUserFollowing": false
+    },
+    "organization": {
+      "_id": "6435e64e2d0ed796668fac8d",
+      "name": "Layer6",
+      "fullname": "Layer 6 AI",
+      "avatar": "https://cdn-avatars.huggingface.co/v1/production/uploads/6435e521a4bd75c62cc0a64c/4S8zHoJeYjBq0L0IDW0nu.png"
+    },
+    "isAuthorParticipating": false
+  }
+]

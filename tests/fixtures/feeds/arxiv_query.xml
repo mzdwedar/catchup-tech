@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<feed xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:arxiv="http://arxiv.org/schemas/atom" xmlns="http://www.w3.org/2005/Atom">
+  <id>https://arxiv.org/api/sLG0txIUz7g/GKW7ibPhDY0NNSQ</id>
+  <title>arXiv Query: search_query=cat:cs.AI&amp;id_list=&amp;start=0&amp;max_results=2</title>
+  <updated>2026-09-08T16:11:42Z</updated>
+  <link href="https://arxiv.org/api/query?search_query=cat:cs.AI&amp;start=0&amp;max_results=2&amp;id_list=" type="application/atom+xml"/>
+  <opensearch:itemsPerPage>2</opensearch:itemsPerPage>
+  <opensearch:totalResults>198384</opensearch:totalResults>
+  <opensearch:startIndex>0</opensearch:startIndex>
+  <entry>
+    <id>http://arxiv.org/abs/2609.05404v1</id>
+    <title>Diffusion TV: Experiencing Diffusion Models through Tangible, Embodied Interaction</title>
+    <updated>2026-09-04T17:51:48Z</updated>
+    <link href="https://arxiv.org/abs/2609.05404v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.05404v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Diffusion TV is an interactive AI art installation that offers a tangible and embodied experience of diffusion models through a modified CRT TV. By physically manipulating the TV's antenna, audiences control the clarity of AI-generated images and sounds, metaphorically enacting the denoising process that underlies diffusion-based generation. Using the tuning knob, participants switch between three channels featuring AI-generated animals from the Past (extinct species), Present (endangered species), and Future (speculative creatures), situating the interaction within a temporal and ecological narrative. Through continuous audiovisual feedback and physical interaction, Diffusion TV foregrounds the generative process over final outputs, allowing audiences to explore intermediate states as experiential material. Rather than providing explicit technical explanation, the work presents an alternative, embodied mode of explainable AI that invites exploratory engagement with and reflection on generative technologies.</summary>
+    <category term="cs.HC" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-04T17:51:48Z</published>
+    <arxiv:comment>In Proceedings of Explainable AI for the Arts Workshop 2026 (XAIxArts 2026) arXiv:2607.20131</arxiv:comment>
+    <arxiv:primary_category term="cs.HC"/>
+    <author>
+      <name>Sihwa Park</name>
+    </author>
+  </entry>
+  <entry>
+    <id>http://arxiv.org/abs/2609.05403v1</id>
+    <title>RegionFed: Federated Learning for Personalized Query Understanding in Heterogeneous Retail Environments</title>
+    <updated>2026-09-04T17:50:10Z</updated>
+    <link href="https://arxiv.org/abs/2609.05403v1" rel="alternate" type="text/html"/>
+    <link href="https://arxiv.org/pdf/2609.05403v1" rel="related" type="application/pdf" title="pdf"/>
+    <summary>Retail search systems serve diverse geographic regions with distinct query patterns, vocabularies, and product preferences, creating significant data heterogeneity that challenges both privacy-preserving training and model personalization. Federated learning offers a natural solution for privacy, but standard FL methods produce global models that sacrifice regional performance, while existing personalized FL approaches operate at the parameter level and catastrophically collapse on modern transformers (below 10\% accuracy on T5) due to tied embeddings and LayerNorm interactions. We introduce RegionFed, an \textit{architecture-robust} federated learning framework that sidesteps this failure by operating entirely at the gradient level. RegionFed uses the $\ell_2$ conflict between regional and global gradients as a unified signal that (i) diagnoses heterogeneity, (ii) routes each region to the cheapest sufficient personalization strategy, and (iii) adaptively controls personalization strength. Because it treats models as differentiable black boxes, RegionFed deploys on T5-Small, T5-3B, RoBERTa, and CNN with zero code changes, providing large gains on transformers (where parameter-level methods collapse) and consistent improvements on CNNs. Across three public datasets (Amazon ESCI, Amazon Reviews, LEAF-FEMNIST) and four architectures, RegionFed-Meta achieves 92.27\%, closing the gap to the privacy-violating centralized upper bound (Centralized + Regional Weighting: 92.04\%, $Δ$=0.23pp, within 1$σ$) while providing $(ε{\approx}0.60)$-differential privacy and $\mathcal{O}(1/\sqrt{T})$ convergence.</summary>
+    <category term="cs.LG" scheme="http://arxiv.org/schemas/atom"/>
+    <category term="cs.AI" scheme="http://arxiv.org/schemas/atom"/>
+    <published>2026-09-04T17:50:10Z</published>
+    <arxiv:primary_category term="cs.LG"/>
+    <author>
+      <name>Quoc H. Nguyen</name>
+    </author>
+    <author>
+      <name>Ali Lafzi</name>
+    </author>
+    <author>
+      <name>Abhijeet Phatak</name>
+    </author>
+    <author>
+      <name>Siddharth Pratap Singh</name>
+    </author>
+    <author>
+      <name>Rohit Upadhyay</name>
+    </author>
+    <author>
+      <name>Yogananda Domlur Seetharama</name>
+    </author>
+    <author>
+      <name>Chittaranjan Tripathy</name>
+    </author>
+  </entry>
+</feed>

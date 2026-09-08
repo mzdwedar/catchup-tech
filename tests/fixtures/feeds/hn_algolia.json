@@ -1,0 +1,221 @@
+{
+  "exhaustive": {
+    "nbHits": false,
+    "typo": false
+  },
+  "exhaustiveNbHits": false,
+  "exhaustiveTypo": false,
+  "hits": [
+    {
+      "_highlightResult": {
+        "author": {
+          "matchLevel": "none",
+          "matchedWords": [],
+          "value": "fittingopposite"
+        },
+        "title": {
+          "fullyHighlighted": false,
+          "matchLevel": "full",
+          "matchedWords": [
+            "llm"
+          ],
+          "value": "Multi-Agents <em>LLM</em> Financial Trading Framework"
+        },
+        "url": {
+          "matchLevel": "none",
+          "matchedWords": [],
+          "value": "https://github.com/TauricResearch/TradingAgents"
+        }
+      },
+      "_tags": [
+        "story",
+        "author_fittingopposite",
+        "story_49605822"
+      ],
+      "author": "fittingopposite",
+      "children": [
+        49607159,
+        49606604,
+        49607408,
+        49610825,
+        49606410,
+        49610891,
+        49606459,
+        49609022,
+        49609512,
+        49606333,
+        49607466,
+        49609233,
+        49606606,
+        49609490,
+        49608987,
+        49608826,
+        49608618,
+        49608698,
+        49609693,
+        49611332,
+        49608286,
+        49607442,
+        49608926,
+        49606866,
+        49606239,
+        49610375,
+        49606414,
+        49610159,
+        49609667,
+        49607986,
+        49607445,
+        49609263,
+        49607712
+      ],
+      "created_at": "2026-09-08T05:20:23Z",
+      "created_at_i": 1788844823,
+      "num_comments": 72,
+      "objectID": "49605822",
+      "points": 100,
+      "story_id": 49605822,
+      "title": "Multi-Agents LLM Financial Trading Framework",
+      "updated_at": "2026-09-08T16:06:02Z",
+      "url": "https://github.com/TauricResearch/TradingAgents"
+    },
+    {
+      "_highlightResult": {
+        "author": {
+          "matchLevel": "none",
+          "matchedWords": [],
+          "value": "ashton314"
+        },
+        "title": {
+          "matchLevel": "none",
+          "matchedWords": [],
+          "value": "Emacs Bedrock 2.0"
+        },
+        "url": {
+          "fullyHighlighted": false,
+          "matchLevel": "full",
+          "matchedWords": [
+            "llm"
+          ],
+          "value": "https://<em>lam</em>bdaland.org/posts/2026-09-06-bedrock-v2/"
+        }
+      },
+      "_tags": [
+        "story",
+        "author_ashton314",
+        "story_49602490"
+      ],
+      "author": "ashton314",
+      "children": [
+        49607804,
+        49605520,
+        49605497,
+        49608999,
+        49605974,
+        49610287,
+        49605505,
+        49607570,
+        49605697,
+        49606870,
+        49605643,
+        49606134
+      ],
+      "created_at": "2026-09-07T20:12:12Z",
+      "created_at_i": 1788811932,
+      "num_comments": 44,
+      "objectID": "49602490",
+      "points": 168,
+      "story_id": 49602490,
+      "title": "Emacs Bedrock 2.0",
+      "updated_at": "2026-09-08T16:11:33Z",
+      "url": "https://lambdaland.org/posts/2026-09-06-bedrock-v2/"
+    },
+    {
+      "_highlightResult": {
+        "author": {
+          "matchLevel": "none",
+          "matchedWords": [],
+          "value": "spwa4"
+        },
+        "story_text": {
+          "fullyHighlighted": false,
+          "matchLevel": "full",
+          "matchedWords": [
+            "llm"
+          ],
+          "value": "In case you're wondering why the <em>lim</em>its behave so very different from last week. Also: this makes <em>lim</em>it resets kind woth significantly less."
+        },
+        "title": {
+          "fullyHighlighted": false,
+          "matchLevel": "full",
+          "matchedWords": [
+            "llm"
+          ],
+          "value": "Tell HN: OpenAI brings back 5 hour <em>lim</em>it for plus and business standard users"
+        }
+      },
+      "_tags": [
+        "story",
+        "author_spwa4",
+        "story_49600233",
+        "ask_hn"
+      ],
+      "author": "spwa4",
+      "children": [
+        49600853,
+        49600619,
+        49600958,
+        49600368,
+        49601186,
+        49600721,
+        49600783,
+        49600739,
+        49601266,
+        49600802,
+        49600758,
+        49600894,
+        49601092,
+        49601219,
+        49601205,
+        49601185,
+        49602469,
+        49600770,
+        49602459,
+        49606111,
+        49601872,
+        49602040,
+        49600283,
+        49600621,
+        49601085
+      ],
+      "created_at": "2026-09-07T16:40:32Z",
+      "created_at_i": 1788799232,
+      "num_comments": 143,
+      "objectID": "49600233",
+      "points": 127,
+      "story_id": 49600233,
+      "story_text": "In case you&#x27;re wondering why the limits behave so very different from last week. Also: this makes limit resets kind woth significantly less.",
+      "title": "Tell HN: OpenAI brings back 5 hour limit for plus and business standard users",
+      "updated_at": "2026-09-08T15:24:33Z"
+    }
+  ],
+  "hitsPerPage": 3,
+  "nbHits": 2278,
+  "nbPages": 334,
+  "page": 0,
+  "params": "query=LLM&tags=story&numericFilters=points%3E%3D100&hitsPerPage=3&advancedSyntax=true&analyticsTags=backend",
+  "processingTimeMS": 32,
+  "processingTimingsMS": {
+    "_request": {
+      "queue": 1,
+      "roundTrip": 18
+    },
+    "fetch": {
+      "query": 1,
+      "scanning": 29,
+      "total": 31
+    },
+    "total": 32
+  },
+  "query": "LLM",
+  "serverTimeMS": 34
+}

@@ -18,6 +18,7 @@ dev = [
 ]
 
 [project.scripts]
+catchup-collect = "catchup.pipeline:main"
 catchup-feeds = "catchup.tools.feed_search:main"
 catchup-hn = "catchup.tools.hn_search:main"
 catchup-arxiv = "catchup.tools.arxiv_search:main"

@@ -53,7 +53,7 @@ uv run ty check                                        # typecheck
 uv run catchup-feeds  search --days 14 --format json   # one source tool
 uv run catchup-hn     search --days 14 --format table
 uv run catchup-arxiv  search --days 14 --format json
-uv run python -m catchup.collect --days 14             # fetch all sources, run the gates
+uv run catchup-collect --days 14                       # fetch all sources, run the gates
 ```
 
 And in Claude Code:

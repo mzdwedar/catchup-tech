@@ -9,5 +9,4 @@ the artifact — it makes the next run re-cover that period.
 
 | Period | Items | Published | Link |
 |---|---|---|---|
-
-*No runs yet. `/scrape --dry-run` to see what a digest would contain.*
+| 2026-08-25 → 2026-09-08 | 12 | 2026-09-08 | https://claude.ai/code/artifact/e858e58d-7996-4cf4-9fea-c2fff7de74db |

@@ -74,6 +74,15 @@ rather than merely low-priority.
 and are editable; only walk through them if asked, or if `--section scoring`/`--section
 design` was passed.
 
+**The digest structure is fixed and `/setup` does not offer to change it.** Whatever
+topics get chosen here, every digest opens with a TLDR of conclusions and every item says
+what it unblocked, why it matters, and what it connects to. That is the product, not a
+preference.
+
+What `--section design` may change: the category names and their order, and the voice
+notes. If someone asks to drop the TLDR or the per-item structure, say plainly that those
+are the parts doing the work, and offer to adjust the categories instead.
+
 ## Writing the files
 
 - Preserve the existing structure and prose. These files are documentation as much as

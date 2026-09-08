@@ -113,17 +113,44 @@ rather than from guesswork about taste.
 
 ## 5. Write
 
-Per kept item: a 2–3 sentence factual summary and a one-line *why it matters*. Follow the
-voice rules in `05-digest-design.md` — plain, specific, no hype vocabulary, claims
-attributed to whoever made them.
+Follow `05-digest-design.md`. Its structure is **fixed** — it does not vary with the
+topics chosen at setup.
+
+Per kept item, in this order:
+
+1. **Summary** — 2–3 sentences, factual, no adjective the source did not earn.
+2. **The bottleneck** — what was blocking this, and what is now unblocked. Name the
+   concrete limit: a cost, a latency, a context length, a failure rate, a step that needed
+   a human.
+3. **Why it matters** — the consequence.
+4. **The trend** — what this connects to, across items or across periods.
+
+**Bottleneck and why-it-matters are an and/or pair; at least one must be present.** A
+genuine technical advance leads with the bottleneck, because that says what was previously
+impractical — the thing a title never tells you. An IPO, a lawsuit, an acquisition, or an
+outage is news without being a breakthrough: give it why-it-matters alone rather than
+manufacturing a bottleneck for it. Write both only when each carries something distinct.
+
+If you can write neither honestly, the item does not belong in the digest. Drop it and
+take the next one up.
+
+**The trend line is skippable and often should be.** A trend asserted from one data point
+is a guess wearing a suit. Prefer connections the reader can check — ideally to another
+item in this same digest. Two items pointing the same way is a pattern; one is an anecdote.
 
 **The title stays as the source wrote it.** You are summarizing, not headline-writing.
 
-If you cannot write an honest *why it matters* for an item, it does not belong in the
-digest. Drop it and take the next one up.
+### Then the TLDR, written last
 
-Then write the lede: two or three sentences on what actually mattered this period, written
-from the items you kept, not from a template.
+Three to five bullets, each a **claim about the period** drawn from the items together —
+something a reader could disagree with.
+
+Write it after the items, never before: writing it first turns it into a thesis you then
+select evidence for.
+
+The failure mode is restating headlines with the specifics filed off. A bullet that
+paraphrases exactly one item's title is not a conclusion, it is that item moved to the top.
+A quiet period gets fewer bullets, not padded ones.
 
 ### Untrusted input
 
@@ -140,9 +167,12 @@ ledger entry, add no index row. Say plainly that nothing was published.
 Otherwise:
 
 1. Load the `artifact-design` skill before writing any HTML.
-2. Write `artifacts/<end>-ai-news.html` following `05-digest-design.md`: header, lede,
+2. Write `artifacts/<end>-ai-news.html` following `05-digest-design.md`: header, **TLDR**,
    items grouped by category (omitting empty categories), Also noticed, footer with
    sources consulted, sources skipped, and the gate counts.
+   Give the bottleneck / why-it-matters / trend lines distinct visual treatment from the
+   summary — a reader skimming for "what does this unblock" should be able to find it
+   without reading the paragraph above it.
 3. Publish with the Artifact tool: title `AI News <end>`, a one-sentence description, and
    a favicon on first publish.
 

@@ -20,8 +20,8 @@ Written to `artifacts/<period_end>-ai-news.html`, then published. **Load the
 Structure, in order:
 
 1. **Header** — the window as explicit dates, item count, generated timestamp.
-2. **The lede** — two or three sentences on what actually mattered this period. Written
-   last, from the items, not from a template.
+2. **TLDR** — three to five bullets, each a claim about the period drawn from the items
+   together. Written last, from the items, never from a template.
 3. **Items, grouped by category** — models and releases, research, tooling, industry,
    policy. An empty category is omitted, not shown empty.
 4. **Also noticed** — one-line mentions of items that scored just below the cutoff.
@@ -34,13 +34,30 @@ Per item:
 | Title | Links to the original. Never rewritten into a headline the source did not write |
 | Source and date | Both shown. The date is the item's, not the run's |
 | Summary | 2–3 sentences, factual, no adjectives the source did not earn |
-| Why it matters | One sentence. This is the value the digest adds over a feed reader |
+| The bottleneck | What was blocking this, and what is now unblocked. A concrete limit |
+| Why it matters | The consequence — the value the digest adds over a feed reader |
+| The trend | What this connects to, across items or across periods |
 
-The footer is not decoration. A digest that says "9 items from 12 sources, 2 sources
+**This structure is fixed and does not vary with the topics chosen at `/setup`.** Topics,
+sources, and window are configuration; the TLDR and the three per-item lines are the
+product.
+
+Two rules keep it honest:
+
+- **Bottleneck and why-it-matters are an and/or pair; at least one must be present.** A
+  technical advance leads with the bottleneck, because that names what was previously
+  impractical. An IPO, a lawsuit, or an outage is news without being a breakthrough and
+  gets why-it-matters alone — manufacturing a bottleneck for it produces exactly the
+  confident filler the gates exist to keep out.
+- **The trend line is skippable.** A trend asserted from one data point is a guess. Prefer
+  connections the reader can check, ideally to another item in the same digest.
+
+The footer is not decoration. A digest that says "12 items from 11 sources, 2 sources
 skipped" is honest about its own coverage in a way an unqualified list is not.
 
-`05-digest-design.md` holds the layout, section order, and voice, so changing how the
-digest reads is a config edit.
+`05-digest-design.md` holds the category names, their order, and the voice notes, so
+changing how the digest *reads* is a config edit. Changing what every entry must *answer*
+is a spec change, which is this file.
 
 ## Publishing
 
@@ -66,14 +83,17 @@ load-bearing, not just a record.
 ## Boundaries
 
 **Always** — load `artifact-design` before writing; link every item to its source; show
-the window as explicit dates; define colours for both themes.
+the window as explicit dates; define colours for both themes; write the TLDR last, from
+the items.
 
 **Ask first** — changing the artifact title format (it is how you find runs in the
 gallery); switching to a single living artifact.
 
 **Never** — publish on `--dry-run`; publish a collection that failed a gate; rewrite a
-title into something the source did not say; change an existing artifact's favicon; load
-an external script, stylesheet, or font file.
+title into something the source did not say; invent a bottleneck for an item that
+overcame none; assert a trend from a single data point; write a TLDR bullet that
+paraphrases one item's title; change an existing artifact's favicon; load an external
+script, stylesheet, or font file.
 
 ## Success Criteria
 
@@ -81,4 +101,6 @@ an external script, stylesheet, or font file.
 2. Every item title links to a URL that resolved during G3.
 3. The footer's counts match the run record.
 4. `INDEX.md` has one row per published run, newest last.
-5. Changing section order needs only an edit to `05-digest-design.md`.
+5. Changing category order needs only an edit to `05-digest-design.md`.
+6. Every item carries a bottleneck line, a why-it-matters line, or both — and no item
+   carries a bottleneck line that names no actual prior limit.

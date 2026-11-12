@@ -10,6 +10,11 @@ hand you back a readable digest as a private [Claude Artifact](https://claude.ai
 
 No newsletter, no subscribers, no cron, no API keys. It runs when you type it.
 
+<p align="center">
+  <img src="docs/digest.png" width="600" alt="A real digest: headline, five-point TLDR, and the first entry with its bottleneck and trend lines">
+  <br><sub>A real run, 25 Aug → 8 Sep 2026: 12 items from 11 sources (<a href="artifacts/2026-09-08-ai-news.html">full HTML</a>).</sub>
+</p>
+
 > These are **Claude Code slash commands**, not shell commands. The repository is a
 > Claude Code project: the commands live in `.claude/commands/` as markdown, and all
 > configuration is markdown you can hand-edit. Design modelled on
@@ -287,6 +292,4 @@ Copyright (c) 2025 Addy Osmani — full notice in
 [`LICENSE-THIRD-PARTY.md`](LICENSE-THIRD-PARTY.md). The only skill authored here is
 `.claude/skills/ai-news-tracker/`, which holds this project's configuration.
 
-This project's own code and documentation have **no license yet**, which means default
-copyright applies and nobody can legally reuse them. If you intend that to change, add a
-LICENSE file.
+This project's own code and documentation are licensed under the [MIT License](LICENSE).

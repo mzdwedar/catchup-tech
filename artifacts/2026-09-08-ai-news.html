@@ -123,9 +123,8 @@
   }
   .tldr li {
     counter-increment: tldr;
-    display: grid;
-    grid-template-columns: 1.6rem 1fr;
-    gap: 0.75rem;
+    position: relative;
+    padding-left: 2.35rem;
     font-size: 1.12rem;
     line-height: 1.5;
     color: var(--ink-soft);
@@ -136,7 +135,9 @@
     font-size: 0.78rem;
     font-variant-numeric: tabular-nums;
     color: var(--faint);
-    padding-top: 0.34rem;
+    position: absolute;
+    left: 0;
+    top: 0.34rem;
   }
   .tldr strong { color: var(--ink); font-weight: 600; }
 
